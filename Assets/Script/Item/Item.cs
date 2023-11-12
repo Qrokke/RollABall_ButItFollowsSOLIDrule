@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class Item : MonoBehaviour, ICollectable
+public class Item : MonoBehaviour, IItem
 {
     [Inject]
     public void Construct(Vector3 position)

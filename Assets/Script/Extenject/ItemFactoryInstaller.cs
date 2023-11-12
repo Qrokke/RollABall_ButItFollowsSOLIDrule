@@ -9,13 +9,8 @@ public class ItemFactoryInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container
-            .BindFactory<Vector3,Item, ItemFactory> ()
+            .BindFactory<Vector3,IItem, ItemFactory> ()
+            .To<Item>()
             .FromComponentInNewPrefab(_itemPrefab);
-        /*
-        //ICreator‚ª—v‹‚³‚ê‚½‚Æ‚«‚ÉItemFactory‚ğì‚Á‚Ä’“ü‚·‚éB
-        Container
-            .Bind<ICreatable>()
-            .To<ItemFactory>()
-            .AsCached();*/
     }
 }
