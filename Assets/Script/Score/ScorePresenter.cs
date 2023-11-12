@@ -11,5 +11,4 @@ public class ScorePresenter : MonoBehaviour
         _scoreData = new ScoreData();
     }
 
-    void 
 }
