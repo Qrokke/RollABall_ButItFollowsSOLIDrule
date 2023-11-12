@@ -13,7 +13,7 @@ public class UnityInputInstaller : MonoInstaller
         Container
             .Bind<IInputReceivable>()
             .To<UnityInputReceiver>()
-            .AsCached();
+            .AsSingle();
         //キャッシュされた時同一オブジェクトかどうかをチェックしたい
     }
 }
