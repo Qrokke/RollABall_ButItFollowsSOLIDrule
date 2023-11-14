@@ -9,7 +9,7 @@ public class ItemFacade : MonoBehaviour
 {
     public ReactiveProperty<int> CurrentGotItemAmount { get; private set; }
     [HideInInspector]
-    public int ItemAmount;
+    public int ItemAmount = 12;
 
 
     [Inject]
@@ -19,11 +19,11 @@ public class ItemFacade : MonoBehaviour
 
     private void Start()
     {
-        _itemGenerator = new ItemManager(ItemAmount, this.transform.position, _itemFactory);
-        CurrentGotItemAmount = _itemGenerator.CurrentGotItemAmount;
     }
     public void CreateItems()
     {
+        _itemGenerator = new ItemManager(ItemAmount, this.transform.position, _itemFactory);
+        CurrentGotItemAmount = _itemGenerator.CurrentGotItemAmount;
         _itemGenerator.CreateItems();
     }
     public void RefreshAll()
