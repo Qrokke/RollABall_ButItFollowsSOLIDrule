@@ -9,7 +9,7 @@ public class UnityInputInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        //IInputReceivableが要求されたときにUnityInputProviderを作って注入する。
+        //IInputReceivableが要求されたときにUnityInputProviderを注入する。
         Container
             .Bind<IInputReceivable>()
             .To<UnityInputReceiver>()

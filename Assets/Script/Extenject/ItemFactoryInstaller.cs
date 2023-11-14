@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -9,7 +7,7 @@ public class ItemFactoryInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container
-            .BindFactory<Vector3,IItem, ItemFactory> ()
+            .BindFactory<Vector3, ICollectable, ItemFactory>()
             .To<Item>()
             .FromComponentInNewPrefab(_itemPrefab);
     }
