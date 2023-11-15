@@ -1,6 +1,11 @@
 using UniRx;
-public interface ICollectable{
-    public Subject<Unit> CollectedSubject { get; }
-    public void Collected();
-    
+
+namespace Item {
+    /// <summary>
+    /// プレイヤーによって取得されるアイテム
+    /// </summary>
+    internal interface ICollectable {
+        public Subject<Unit> CollectedSubject { get; }
+        public void Collected();
+    }
 }

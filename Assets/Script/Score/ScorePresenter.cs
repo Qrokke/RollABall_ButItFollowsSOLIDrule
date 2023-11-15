@@ -1,6 +1,13 @@
 using UniRx;
 using UnityEngine;
+using Item;
 
+/// <summary>
+/// スコアに関するデータの仲介役
+/// ゲームデータの数値はScoreDataに保持されている
+/// そのゲームへの反映はFacadeへ
+/// その表示はTextへ
+/// </summary>
 public class ScorePresenter : MonoBehaviour
 {
     private ScoreData _scoreData;

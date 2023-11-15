@@ -6,66 +6,73 @@ using UniRx;
 /// スタート時、ファクトリとアイテムを利用するための上位クラス
 /// アイテムの配置を行うためだけにある
 /// </summary>
-public class ItemManager
+namespace Item
 {
-    //現在の取得アイテム数
-    public ReactiveProperty<int> CurrentGotItemAmount = new ReactiveProperty<int>(0);
-    //Zenjectにより注入
-    [Inject]
-    private ItemFactory _itemFactory;
-
-    private ICollectable[] _iitems;
-    private int _itemAmount = 12;
-    private float _itemScatter = 8f;
-
-    private Vector3 _generatePosition;
-
-    public ItemManager(int ItemAmount, Vector3 position, ItemFactory itemFactory)
+    internal class ItemManager
     {
-        _itemAmount = ItemAmount;
-        _generatePosition = position;
-        _itemFactory = itemFactory;
-        Debug.Log($"_itemFactory: {_itemFactory}");
-    }
+        //現在の取得アイテム数
+        internal ReactiveProperty<int> CurrentGotItemAmount = new ReactiveProperty<int>(0);
 
-    public void CreateItems()
-    {
-        if(_itemFactory == null)
+        //Zenjectにより注入
+        [Inject]
+        private ItemFactory _itemFactory;
+
+        private ICollectable[] _iitems;
+        private int _itemAmount = 12;
+        private float _itemScatter = 8f;
+
+        private Vector3 _generatePosition;
+
+        //コンストラクタ
+        internal ItemManager(int ItemAmount, Vector3 position, ItemFactory itemFactory)
         {
-            return;
+            _itemAmount = ItemAmount;
+            _generatePosition = position;
+            _itemFactory = itemFactory;
         }
-        _iitems = new ICollectable[_itemAmount];
 
-        for (int i = 0; i < _itemAmount; i++)
+        //アイテムの出現処理
+        internal void CreateItems()
         {
-            Vector3 itemPosition = itemPositionVectorByOrder(i);
+            if (_itemFactory == null)
+            {
+                return;
+            }
+            _iitems = new ICollectable[_itemAmount];
 
-            //ZenjectでIItemとFactoryを紐づけているので出現場所を送るだけでよい
-            //生成処理
-            ICollectable item = _itemFactory.Create(itemPosition);
+            for (int i = 0; i < _itemAmount; i++)
+            {
+                Vector3 itemPosition = itemPositionVectorByOrder(i);
 
-            _iitems[i] = item;
+                //ZenjectでIItemとFactoryを紐づけているので出現場所を送るだけでよい
+                //生成処理
+                ICollectable item = _itemFactory.Create(itemPosition);
 
-            _iitems[i].CollectedSubject.Subscribe(_ => {
-                CurrentGotItemAmount.Value++;
-            });
+                _iitems[i] = item;
+
+                _iitems[i].CollectedSubject.Subscribe(_ =>
+                {
+                    CurrentGotItemAmount.Value++;
+                });
+            }
         }
+
+        private Vector3 itemPositionVectorByOrder(int order)
+        {
+
+            //円形に並べてみる。
+            float itemPositionX = _itemScatter * Mathf.Cos(Mathf.PI / (_itemAmount / 2f) * order);
+            float itemPositionZ = _itemScatter * Mathf.Sin(Mathf.PI / (_itemAmount / 2f) * order);
+
+            //生成位置
+            Vector3 returnPosition = new Vector3(itemPositionX, 0f, itemPositionZ);
+            //初期位置をオブジェクトの量だけ移動
+            returnPosition += _generatePosition;
+
+            return returnPosition;
+
+        }
+
+
     }
-
-    private Vector3 itemPositionVectorByOrder(int order) {
-
-        //円形に並べてみる。
-        float itemPositionX = _itemScatter * Mathf.Cos(Mathf.PI / (_itemAmount / 2f) * order);
-        float itemPositionZ = _itemScatter * Mathf.Sin(Mathf.PI / (_itemAmount / 2f) * order);
-
-        //生成位置
-        Vector3 returnPosition = new Vector3(itemPositionX, 0f, itemPositionZ);
-        //初期位置をオブジェクトの量だけ移動
-        returnPosition += _generatePosition;
-
-        return returnPosition;
-    
-    }
-
-
 }
