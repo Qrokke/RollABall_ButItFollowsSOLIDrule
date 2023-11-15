@@ -19,18 +19,23 @@ namespace Item
 
         private ItemManager _itemGenerator;
 
-        private void Start()
+        private void Awake()
         {
-        }
-        public void CreateItems()
-        {
+            //アイテム関連の生成や初期化を行う
             _itemGenerator = new ItemManager(ItemAmount, this.transform.position, _itemFactory);
             CurrentGotItemAmount = _itemGenerator.CurrentGotItemAmount;
+        }
+
+        //アイテムの生成
+        public void CreateItems()
+        {
             _itemGenerator.CreateItems();
         }
+
+        //アイテムの再生成
         public void RefreshAll()
         {
-
+            _itemGenerator.DeleteItems();
         }
     }
 }
