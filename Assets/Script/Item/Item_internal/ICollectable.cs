@@ -7,5 +7,6 @@ namespace Item {
     internal interface ICollectable {
         public Subject<Unit> CollectedSubject { get; }
         public void Collected();
+        public void Vanish();
     }
 }

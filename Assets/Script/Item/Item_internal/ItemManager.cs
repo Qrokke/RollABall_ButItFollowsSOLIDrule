@@ -11,7 +11,7 @@ namespace Item
     internal class ItemManager
     {
         //現在の取得アイテム数
-        internal ReactiveProperty<int> CurrentGotItemAmount = new ReactiveProperty<int>(0);
+        public ReactiveProperty<int> CurrentGotItemAmount = new ReactiveProperty<int>(0);
 
         //Zenjectにより注入
         [Inject]
@@ -24,7 +24,7 @@ namespace Item
         private Vector3 _generatePosition;
 
         //コンストラクタ
-        internal ItemManager(int ItemAmount, Vector3 position, ItemFactory itemFactory)
+        public ItemManager(int ItemAmount, Vector3 position, ItemFactory itemFactory)
         {
             _itemAmount = ItemAmount;
             _generatePosition = position;
@@ -32,7 +32,7 @@ namespace Item
         }
 
         //アイテムの出現処理
-        internal void CreateItems()
+        public void CreateItems()
         {
             if (_itemFactory == null)
             {
@@ -50,10 +50,19 @@ namespace Item
 
                 _iitems[i] = item;
 
+                //集められたというイベントを受け取って得点を増やす
                 _iitems[i].CollectedSubject.Subscribe(_ =>
                 {
                     CurrentGotItemAmount.Value++;
                 });
+            }
+        }
+
+        public void DeleteItems()
+        {
+            foreach (ICollectable item in _iitems)
+            {
+                item.Vanish();
             }
         }
 

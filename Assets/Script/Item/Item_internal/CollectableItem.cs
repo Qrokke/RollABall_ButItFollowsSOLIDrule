@@ -10,7 +10,7 @@ namespace Item
 
         //Zenjectのファクトリで生成時に呼ばれるメソッドインジェクション。行ってることはコンストラクタと同じ
         [Inject]
-        internal void Construct(Vector3 position)
+        public void Construct(Vector3 position)
         {
             transform.position = position;
             CollectedSubject = new Subject<Unit>();
@@ -19,8 +19,15 @@ namespace Item
         public void Collected()
         {
             CollectedSubject.OnNext(Unit.Default);
+            Vanish();
+        }
+
+        public void Vanish()
+        {
             Destroy(this.gameObject);
         }
+
+
 
         //取得済みを示すための
 
