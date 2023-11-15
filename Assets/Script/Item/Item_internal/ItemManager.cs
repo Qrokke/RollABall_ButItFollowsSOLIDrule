@@ -34,10 +34,6 @@ namespace Item
         //アイテムの出現処理
         public void CreateItems()
         {
-            if (_itemFactory == null)
-            {
-                return;
-            }
             _iitems = new ICollectable[_itemAmount];
 
             for (int i = 0; i < _itemAmount; i++)
@@ -62,6 +58,7 @@ namespace Item
         {
             foreach (ICollectable item in _iitems)
             {
+                if (item == null) continue;
                 item.Vanish();
             }
         }

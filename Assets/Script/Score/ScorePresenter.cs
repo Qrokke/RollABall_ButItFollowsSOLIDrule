@@ -24,11 +24,14 @@ public class ScorePresenter : MonoBehaviour
     void Awake()
     {
         _scoreData = new ScoreData();
+    }
+    private void Start()
+    {
         _itemFacade.ItemAmount = _scoreData.MaxScore;
         _itemFacade.CreateItems();
         _itemFacade.CurrentGotItemAmount.Subscribe(x => {
             _leftOverScript.UpDateText(x);
-            if(x >= _scoreData.MaxScore)
+            if (x >= _scoreData.MaxScore)
             {
                 _gameClearText.OpenText();
             }

@@ -19,7 +19,7 @@ namespace Item
 
         private ItemManager _itemGenerator;
 
-        private void Start()
+        private void Awake()
         {
             //アイテム関連の生成や初期化を行う
             _itemGenerator = new ItemManager(ItemAmount, this.transform.position, _itemFactory);
