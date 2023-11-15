@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3597012062544867380}
   - component: {fileID: 3597012062544867381}
   m_Layer: 0
-  m_Name: ItemCreator
+  m_Name: ItemFacade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
