@@ -1,6 +1,7 @@
 using UnityEngine;
 using Zenject;
 using UniRx;
+using Item;
 
 /// <summary>
 /// スタート時、ファクトリとアイテムを利用するための上位クラス
@@ -47,10 +48,11 @@ namespace Item
                 _iitems[i] = item;
 
                 //集められたというイベントを受け取って得点を増やす
-                _iitems[i].CollectedSubject.Subscribe(_ =>
-                {
-                    CurrentGotItemAmount.Value++;
-                });
+                _iitems[i].CollectedSubject
+                    .Subscribe(_ =>
+                    {
+                        CurrentGotItemAmount.Value++;
+                    });
             }
         }
 
